@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="ErLang Speaking Club — online English speaking practice for A2–B2. Friendly, no-pressure sessions on Zoom. Small groups up to 6." />
+  <title>ErLang Speaking Club</title>
+  <style>
+    :root{
+      /* Blue-forward, cozy, high-contrast palette */
+      --bg0:#f6f9ff;
+      --bg1:#eef6ff;
+      --surface:#ffffff;
+      --ink:#0b1220;
+      --muted:#475569;
+
+      --blue-50:#eff6ff;
+      --blue-100:#dbeafe;
+      --blue-200:#bfdbfe;
+      --blue-300:#93c5fd;
+      --blue-500:#3b82f6;
+      --blue-700:#1d4ed8;
+      --blue-900:#0b2a6f;
+
+      --accent: var(--blue-700);
+      --accent2: #7dd3fc; /* sky */
+      --warm: #ffd166;    /* warm highlight */
+      --line: rgba(15,23,42,.12);
+
+      --radius: 18px;
+      --shadow: 0 14px 40px rgba(2, 6, 23, .10);
+      --max: 1100px;
+
+      --ring: 0 0 0 4px rgba(59,130,246,.18);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 700px at 10% 10%, rgba(59,130,246,.16), transparent 60%),
+        radial-gradient(900px 600px at 90% 20%, rgba(125,211,252,.18), transparent 55%),
+        radial-gradient(1000px 700px at 40% 90%, rgba(255,209,102,.14), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      line-height:1.55;
+    }
+
+    a{ color: var(--accent); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    .skip{
+      position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden;
+    }
+    .skip:focus{
+      left:16px; top:16px; width:auto; height:auto;
+      padding:10px 12px;
+      background: var(--surface);
+      border:1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      z-index: 9999;
+    }
+
+    .wrap{ max-width: var(--max); margin:0 auto; padding:0 18px; }
+
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(12px);
+      background: rgba(246,249,255,.72);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 0; gap: 12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap: 10px;
+      min-width: 220px;
+    }
+    .brand .mark{
+      width: 38px; height: 38px; border-radius: 14px;
+      background:
+        radial-gradient(14px 14px at 25% 30%, rgba(255,255,255,.9), transparent 60%),
+        linear-gradient(140deg, var(--blue-700), var(--blue-300));
+      box-shadow: 0 10px 22px rgba(29,78,216,.25);
+      border: 1px solid rgba(255,255,255,.35);
+      position: relative;
+      overflow:hidden;
+    }
+    .brand .mark:after{
+      content:"";
+      position:absolute; inset:-10px;
+      background: radial-gradient(180px 70px at 40% 0%, rgba(255,255,255,.35), transparent 60%);
+      transform: rotate(-10deg);
+    }
+    .brand-text{ display:flex; flex-direction:column; gap:2px; }
+    .brand strong{ font-size: 15.5px; letter-spacing:.2px; }
+    .brand span{ font-size: 12px; color: var(--muted); }
+
+    nav ul{
+      list-style:none; margin:0; padding:0;
+      display:flex; gap: 14px; flex-wrap: wrap;
+      font-size: 14px;
+    }
+    nav a{ color: var(--ink); opacity:.88; }
+    nav a:hover{ color: var(--accent); opacity: 1; }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(15,23,42,.14);
+      background: rgba(255,255,255,.85);
+      color: var(--ink);
+      font-weight: 700;
+      box-shadow: 0 10px 24px rgba(2,6,23,.08);
+      transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease;
+      text-decoration:none !important;
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 16px 34px rgba(2,6,23,.10); border-color: rgba(59,130,246,.35); }
+    .btn:focus{ outline:none; box-shadow: var(--ring), 0 16px 34px rgba(2,6,23,.10); }
+
+    .btn.primary{
+      background: linear-gradient(180deg, rgba(29,78,216,.98), rgba(59,130,246,.92));
+      color: white;
+      border-color: rgba(255,255,255,.18);
+    }
+    .btn.ghost{ background: transparent; box-shadow:none; }
+
+    main{ padding: 26px 0 64px; }
+    section{ padding: 38px 0; }
+
+    .card{
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(15,23,42,.12);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    /* HERO */
+    .hero{ padding-top: 22px; padding-bottom: 10px; }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 18px;
+      align-items: stretch;
+      overflow:hidden;
+      position: relative;
+    }
+    .hero-grid:before{
+      content:"";
+      position:absolute;
+      inset:-120px -120px auto auto;
+      width: 420px; height: 420px;
+      background: radial-gradient(circle at 30% 30%, rgba(125,211,252,.65), rgba(59,130,246,.25), transparent 65%);
+      filter: blur(2px);
+      transform: rotate(15deg);
+      pointer-events:none;
+    }
+    .hero-left{ padding: 28px; position: relative; }
+
+    .kicker{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size: 13px;
+      color: rgba(11,18,32,.82);
+      background: linear-gradient(90deg, rgba(147,197,253,.35), rgba(125,211,252,.18));
+      border: 1px solid rgba(59,130,246,.22);
+      padding: 7px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    h1{
+      margin: 10px 0 10px;
+      font-size: clamp(30px, 3.4vw, 46px);
+      line-height: 1.1;
+      letter-spacing: -0.7px;
+    }
+    .tagline{
+      font-weight: 800;
+      color: rgba(11,18,32,.92);
+    }
+    .lead{ color: var(--muted); font-size: 16px; margin: 0 0 16px; max-width: 60ch; }
+
+    .hero-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px; }
+
+    .chips{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top: 16px;
+      padding:0;
+      list-style:none;
+      font-size: 13px;
+      color: rgba(11,18,32,.78);
+    }
+    .chips li{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.70);
+      border: 1px solid rgba(59,130,246,.18);
+      box-shadow: 0 10px 24px rgba(2,6,23,.04);
+    }
+
+    .hero-right{ padding: 18px; display:flex; flex-direction:column; gap: 12px; position: relative; }
+
+    .mini{
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(15,23,42,.12);
+      background: rgba(255,255,255,.78);
+    }
+    .mini h3{ margin:0 0 6px; font-size: 14px; }
+    .mini p{ margin:0; color: var(--muted); font-size: 14px; }
+    .mini strong{ color: var(--ink); }
+
+    .stats{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 2px;
+    }
+    .stat{
+      border-radius: 16px;
+      padding: 12px;
+      background: linear-gradient(180deg, rgba(219,234,254,.55), rgba(255,255,255,.55));
+      border: 1px solid rgba(59,130,246,.18);
+    }
+    .stat strong{ display:block; font-size: 16px; }
+    .stat span{ color: var(--muted); font-size: 12.5px; }
+
+    /* SECTION HEAD */
+    .section-head{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap: 12px; margin-bottom: 14px;
+    }
+    .section-head h2{
+      margin:0;
+      font-size: 24px;
+      letter-spacing: -0.3px;
+    }
+    .section-head p{
+      margin:0;
+      color: var(--muted);
+      max-width: 62ch;
+      font-size: 14px;
+    }
+
+    .grid3{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .two{ display:grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .tile{
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(15,23,42,.12);
+      background: rgba(255,255,255,.80);
+      box-shadow: 0 12px 28px rgba(2,6,23,.05);
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .tile:hover{ transform: translateY(-2px); box-shadow: 0 16px 36px rgba(2,6,23,.07); }
+    .tile h3{ margin: 0 0 8px; font-size: 16px; }
+    .tile p{ margin:0; color: var(--muted); font-size: 14px; }
+
+    .list{ margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+    .list li{ margin: 6px 0; }
+
+    /* TESTIMONIALS */
+    .review{
+      display:flex; gap: 12px; align-items:flex-start;
+    }
+    .avatar{
+      width: 44px; height: 44px;
+      border-radius: 14px;
+      flex: 0 0 auto;
+      border: 1px solid rgba(255,255,255,.55);
+      box-shadow: 0 14px 24px rgba(2,6,23,.10);
+      overflow:hidden;
+    }
+    .review blockquote{
+      margin:0;
+      padding:0;
+      color: rgba(11,18,32,.86);
+      font-size: 14.5px;
+    }
+    .review footer{
+      border-top:none;
+      padding:0;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* CTA STRIP */
+    .cta{
+      padding: 18px;
+      border-radius: 18px;
+      background:
+        radial-gradient(900px 240px at 10% 20%, rgba(125,211,252,.40), transparent 60%),
+        radial-gradient(800px 240px at 90% 40%, rgba(59,130,246,.34), transparent 55%),
+        linear-gradient(90deg, rgba(29,78,216,.96), rgba(59,130,246,.86));
+      color: white;
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 18px 46px rgba(2,6,23,.14);
+      display:flex;
+      gap: 14px;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .cta h3{ margin:0; font-size: 18px; letter-spacing: -0.2px; }
+    .cta p{ margin:4px 0 0; opacity:.92; }
+    .cta .btn{ border-color: rgba(255,255,255,.30); background: rgba(255,255,255,.12); color: white; box-shadow:none; }
+    .cta .btn:hover{ border-color: rgba(255,255,255,.50); }
+    .cta .btn.primary{ background: rgba(255,255,255,.95); color: var(--blue-900); }
+
+    /* FAQ */
+    details{
+      border: 1px solid rgba(15,23,42,.12);
+      border-radius: 14px;
+      background: rgba(255,255,255,.80);
+      padding: 12px 14px;
+      box-shadow: 0 12px 28px rgba(2,6,23,.04);
+    }
+    details + details{ margin-top: 10px; }
+    summary{ cursor:pointer; font-weight: 800; list-style:none; }
+    summary::-webkit-details-marker{ display:none; }
+    .faq p{ margin: 8px 0 0; color: var(--muted); font-size: 14px; }
+
+    /* FOOTER */
+    footer.site-footer{
+      border-top: 1px solid rgba(15,23,42,.12);
+      padding: 22px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .foot{
+      display:flex; gap: 12px;
+      justify-content:space-between; align-items:center;
+      flex-wrap: wrap;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .grid3{ grid-template-columns: 1fr; }
+      .two{ grid-template-columns: 1fr; }
+      nav ul{ display:none; }
+      .stats{ grid-template-columns: 1fr 1fr 1fr; }
+    }
+    @media (max-width: 520px){
+      .stats{ grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .btn,.tile{ transition:none; }
+      .tile:hover{ transform:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header>
+    <div class="wrap">
+      <div class="nav" aria-label="Primary">
+        <div class="brand">
+          <div class="mark" aria-hidden="true"></div>
+          <div class="brand-text">
+            <strong>ErLang Speaking Club</strong>
+            <span>Zoom • Weekly • A2–B2 • Small groups</span>
+          </div>
+        </div>
+
+        <nav aria-label="Site">
+          <ul>
+            <li><a href="#how">How it works</a></li>
+            <li><a href="#schedule">Schedule</a></li>
+            <li><a href="#levels">Levels</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </nav>
+
+        <a class="btn primary" href="#book">Book a spot</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-grid card">
+        <div class="hero-left">
+          <div class="kicker" aria-label="Tagline">
+            ✨ <span class="tagline">Stop learning English. Start speaking it.</span>
+          </div>
+
+          <h1>Speak more fluently — with confidence.</h1>
+          <p class="lead">
+            A friendly, no-pressure English speaking club for teens and adults.
+            Small Zoom groups (up to 6) with real conversation, useful vocabulary, and breakout-room practice.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="#book">Book via the form</a>
+            <a class="btn" href="#schedule">See schedule</a>
+            <a class="btn ghost" href="#about">Meet Ms Erna</a>
+          </div>
+
+          <ul class="chips" aria-label="Highlights">
+            <li>🧩 A2–B2 groups (A2–B1 / B1–B2)</li>
+            <li>🕒 75-minute sessions</li>
+            <li>👥 Up to 6 participants</li>
+            <li>🤝 Friendly + networking vibe</li>
+          </ul>
+        </div>
+
+        <aside class="hero-right" aria-label="Quick info">
+          <div class="mini">
+            <h3>Weekly sessions</h3>
+            <p><strong>Wednesday</strong></p>
+            <p>18:00 — A2–B1</p>
+            <p>19:30 — B1–B2</p>
+            <br>
+            <p><strong>Sunday</strong></p>
+            <p>18:00 — A2–B1</p>
+            <p>19:30 — B1–B2</p>
+          </div>
+
+          <div class="stats" aria-label="Quick stats">
+            <div class="stat"><strong>6 max</strong><span>participants</span></div>
+            <div class="stat"><strong>75 min</strong><span>per session</span></div>
+            <div class="stat"><strong>Zoom</strong><span>breakout rooms</span></div>
+          </div>
+
+          <div class="mini">
+            <h3>Free level check (optional)</h3>
+            <p>15–20 minutes to confirm your level and recommend the best group.</p>
+          </div>
+
+          <div class="mini">
+            <h3>Miss a class?</h3>
+            <p>You still receive the full package of materials used in the lesson.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- CTA STRIP -->
+    <section aria-label="Quick call to action">
+      <div class="cta">
+        <div>
+          <h3>Ready to start speaking weekly?</h3>
+          <p>Join a small group and make English a habit — calmly and consistently.</p>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn primary" href="#book">Open booking form</a>
+          <a class="btn" href="#levels">Pick your level</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how">
+      <div class="section-head">
+        <div>
+          <h2>How it works</h2>
+          <p>Simple structure, relaxed atmosphere, and lots of speaking time.</p>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="tile">
+          <h3>1) Warm-up</h3>
+          <p>Short questions to switch into English and feel comfortable.</p>
+        </div>
+        <div class="tile">
+          <h3>2) Topic discussion</h3>
+          <p>Daily life themes + guided prompts to keep the conversation flowing.</p>
+        </div>
+        <div class="tile">
+          <h3>3) Vocabulary</h3>
+          <p>Useful phrases you can immediately reuse (not long lists).</p>
+        </div>
+        <div class="tile">
+          <h3>4) Roleplay / debate</h3>
+          <p>Breakout rooms in Zoom for pair/small-group practice.</p>
+        </div>
+        <div class="tile">
+          <h3>5) Feedback</h3>
+          <p>Quick wrap-up and suggestions for what to try next time.</p>
+        </div>
+        <div class="tile">
+          <h3>Optional homework</h3>
+          <p>After the lesson you get links to materials used (homework is optional).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section id="schedule">
+      <div class="section-head">
+        <div>
+          <h2>Schedule</h2>
+          <p>One session per week. All sessions are on Zoom.</p>
+        </div>
+      </div>
+
+      <div class="two">
+        <div class="tile">
+          <h3>Wednesday</h3>
+          <p><strong>18:00 — A2–B1</strong></p>
+          <p><strong>19:30 — B1–B2</strong></p>
+          <p>75 minutes • Zoom • small group</p>
+        </div>
+        <div class="tile">
+          <h3>Sunday</h3>
+          <p><strong>18:00 — A2–B1</strong></p>
+          <p><strong>19:30 — B1–B2</strong></p>
+          <p>75 minutes • Zoom • small group</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEVELS -->
+    <section id="levels">
+      <div class="section-head">
+        <div>
+          <h2>Levels & groups</h2>
+          <p>Different groups for different comfort levels — so you can speak, not stress.</p>
+        </div>
+      </div>
+
+      <div class="two">
+        <div class="tile">
+          <h3>A2–B1</h3>
+          <p>Supportive pace, clear prompts, and plenty of practice with real communication.</p>
+          <ul class="list">
+            <li>Daily life topics</li>
+            <li>Simple, reusable speaking frames</li>
+            <li>Gentle pace + lots of turns</li>
+          </ul>
+        </div>
+        <div class="tile">
+          <h3>B1–B2</h3>
+          <p>More challenge, more spontaneity — still calm and no-pressure.</p>
+          <ul class="list">
+            <li>Discussion + mini debates</li>
+            <li>Roleplays and scenarios</li>
+            <li>Networking-friendly vibe</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="section-head">
+        <div>
+          <h2>About the teacher</h2>
+          <p>A few trust-building details — calm, professional, and clear.</p>
+        </div>
+      </div>
+
+      <div class="two">
+        <div class="tile">
+          <h3>Ms Erna</h3>
+          <p>
+            I have <strong>20+ years</strong> of teaching experience and a <strong>pedagogical university degree</strong>.
+            I’ve been teaching English since <strong>2002</strong>.
+          </p>
+          <p style="margin-top:10px; color: var(--muted); font-size:14px;">
+            In ErLang Speaking Club, we focus on <strong>real-life speaking</strong>: comfortable pace, clear structure,
+            and small groups so everyone gets time to talk.
+          </p>
+        </div>
+
+        <div class="tile" style="background: linear-gradient(180deg, rgba(239,246,255,.85), rgba(255,255,255,.78)); border-color: rgba(59,130,246,.18);">
+          <h3>Why participants stay</h3>
+          <ul class="list">
+            <li><strong>Small groups</strong> (up to 6) — you won’t disappear in the crowd</li>
+            <li><strong>Predictable structure</strong> — you always know what to expect</li>
+            <li><strong>Practical topics</strong> — daily life speaking you can use immediately</li>
+            <li><strong>No-pressure vibe</strong> — we build confidence step by step</li>
+            <li><strong>Materials package</strong> after each class (even if you miss it)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing">
+      <div class="section-head">
+        <div>
+          <h2>Pricing</h2>
+          <p>Monthly membership. Trial options are available.</p>
+        </div>
+      </div>
+
+      <div class="two">
+        <div class="tile">
+          <h3>Monthly membership</h3>
+          <p><strong>Prices available upon contact.</strong></p>
+          <ul class="list">
+            <li>One 75-minute session per week</li>
+            <li>Materials package after each lesson</li>
+            <li>Small group (up to 6)</li>
+          </ul>
+        </div>
+        <div class="tile">
+          <h3>Free level check</h3>
+          <p><strong>15–20 minute meeting</strong> (optional) to confirm your level.</p>
+          <p style="margin-top:10px; color: var(--muted); font-size:14px;">
+            Prefer to jump straight in? You can also book a trial lesson.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials">
+      <div class="section-head">
+        <div>
+          <h2>What participants say</h2>
+          
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="tile">
+          <div class="review">
+            <img class="avatar" alt="Avatar of Anna" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='88' height='88' viewBox='0 0 88 88'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='%231d4ed8'/><stop offset='1' stop-color='%2393c5fd'/></linearGradient></defs><rect width='88' height='88' rx='24' fill='url(%23g)'/><circle cx='28' cy='28' r='18' fill='rgba(255,255,255,.25)'/><text x='44' y='56' text-anchor='middle' font-size='34' font-family='Arial' font-weight='700' fill='white'>A</text></svg>" />
+            <div>
+              <blockquote>“I finally started speaking without overthinking every sentence.”</blockquote>
+              <footer>Anna K. • B1</footer>
+            </div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="review">
+            <img class="avatar" alt="Avatar of Dmitry" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='88' height='88' viewBox='0 0 88 88'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='%230b2a6f'/><stop offset='1' stop-color='%237dd3fc'/></linearGradient></defs><rect width='88' height='88' rx='24' fill='url(%23g)'/><circle cx='60' cy='26' r='16' fill='rgba(255,255,255,.22)'/><text x='44' y='56' text-anchor='middle' font-size='34' font-family='Arial' font-weight='700' fill='white'>D</text></svg>" />
+            <div>
+              <blockquote>“The breakout rooms give me real practice time, not just listening.”</blockquote>
+              <footer>Dmitry S. • A2–B1</footer>
+            </div>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="review">
+            <img class="avatar" alt="Avatar of Maria" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='88' height='88' viewBox='0 0 88 88'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='%233b82f6'/><stop offset='1' stop-color='%23bfdbfe'/></linearGradient></defs><rect width='88' height='88' rx='24' fill='url(%23g)'/><circle cx='30' cy='62' r='18' fill='rgba(255,255,255,.22)'/><text x='44' y='56' text-anchor='middle' font-size='34' font-family='Arial' font-weight='700' fill='white'>M</text></svg>" />
+            <div>
+              <blockquote>“Friendly people, calm vibe, and topics that match real life.”</blockquote>
+              <footer>Maria P. • B2</footer>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOOKING -->
+    <section id="book">
+      <div class="section-head">
+        <div>
+          <h2>Book a spot</h2>
+          
+        </div>
+      </div>
+
+      <div class="card" style="padding:16px;">
+        <div class="two">
+          <div class="tile" style="background: linear-gradient(180deg, rgba(219,234,254,.75), rgba(255,255,255,.80)); border-color: rgba(59,130,246,.20);">
+            <h3>Ready to join?</h3>
+            <p>
+              Click below to open the booking form.
+              You’ll choose your level and preferred day.
+            </p>
+
+            <!-- EDIT THIS LINK -->
+            <p style="margin-top:12px;">
+              <a class="btn primary" href="YOUR_TALLY_FORM_LINK_HERE" target="_blank" rel="noopener noreferrer">
+                Open booking form
+              </a>
+            </p>
+
+            <p style="margin-top:10px; color: var(--muted); font-size: 13px;">
+              Replace <strong>YOUR_TALLY_FORM_LINK_HERE</strong> with your Tally form URL.
+            </p>
+          </div>
+
+          <div class="tile">
+            <h3>What you’ll get</h3>
+            <ul class="list">
+              <li>Small group speaking (up to 6)</li>
+              <li>Daily life topics + guided prompts</li>
+              <li>Breakout rooms for maximum speaking time</li>
+              <li>Materials package after each lesson</li>
+              <li>Optional 15–20 min level check</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq">
+      <div class="section-head">
+        <div>
+          <h2>FAQ</h2>
+          <p>Quick answers to the most common questions.</p>
+        </div>
+      </div>
+
+      <details>
+        <summary>Do you correct mistakes during the session?</summary>
+        <p>No heavy correction during the conversation. The focus is fluency and confidence. We do a short feedback part at the end.</p>
+      </details>
+
+      <details>
+        <summary>What if I miss a class?</summary>
+        <p>You still receive the full package of materials used in the lesson.</p>
+      </details>
+
+      <details>
+        <summary>Is there homework?</summary>
+        <p>Homework is optional. After the lesson you get links to the materials used.</p>
+      </details>
+
+      <details>
+        <summary>How do I know my level?</summary>
+        <p>You can book a free 15–20 minute meeting to confirm your level (optional).</p>
+      </details>
+
+      <details>
+        <summary>Can teens and adults study together?</summary>
+        <p>It depends on the group. Usually, we aim for comfortable communication — you can request a teen or adult group in the form.</p>
+      </details>
+    </section>
+
+    <footer class="site-footer">
+      <div class="foot">
+        <div>
+          <strong style="color:var(--ink);">ErLang Speaking Club</strong><br />
+          <span>Zoom • Weekly • A2–B2 • Stop learning English. Start speaking it.</span>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn" href="#book">Book now</a>
+          <a class="btn ghost" href="#how">How it works</a>
+        </div>
+      </div>
+      <div style="margin-top:12px;">
+        <span>© <span id="y"></span> Ms Erna. All rights reserved.</span>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

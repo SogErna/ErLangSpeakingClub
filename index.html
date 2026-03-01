@@ -38,6 +38,7 @@
     html,body{ height:100%; }
     body{
       margin:0;
+      padding-top:72px; /* space for fixed header */
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--ink);
       background:
@@ -67,7 +68,7 @@
     .wrap{ max-width: var(--max); margin:0 auto; padding:0 18px; }
 
     header{
-      position:sticky; top:0; z-index:50;
+      position:fixed; top:0; left:0; right:0; z-index:50;
       backdrop-filter: blur(12px);
       background: rgba(246,249,255,.72);
       border-bottom: 1px solid var(--line);
@@ -105,8 +106,29 @@
       display:flex; gap: 14px; flex-wrap: wrap;
       font-size: 14px;
     }
-    nav a{ color: var(--ink); opacity:.88; }
-    nav a:hover{ color: var(--accent); opacity: 1; }
+    nav a{ color: var(--ink); opacity:.88; position: relative; padding: 8px 10px; border-radius: 999px; }
+    nav a:hover{ color: var(--accent); opacity: 1; text-decoration:none; }
+
+    /* Scroll highlight (active section) */
+    nav a.active{
+      color: var(--blue-900);
+      opacity: 1;
+      background: linear-gradient(180deg, rgba(219,234,254,.75), rgba(255,255,255,.65));
+      border: 1px solid rgba(59,130,246,.22);
+      box-shadow: 0 10px 22px rgba(2,6,23,.06);
+    }
+    nav a.active:after{
+      content:"";
+      position:absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 4px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(29,78,216,.95), rgba(125,211,252,.85));
+      opacity: .9;
+    }
+    nav a:focus{ outline:none; box-shadow: var(--ring); }
 
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
@@ -759,6 +781,65 @@
 
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Scrollspy: highlight the nav item for the section currently in view
+    (function(){
+      const navLinks = Array.from(document.querySelectorAll('header nav a[href^="#"]'));
+      if (!navLinks.length) return;
+
+      const sections = navLinks
+        .map(a => document.querySelector(a.getAttribute('href')))
+        .filter(Boolean);
+
+      const setActive = (id) => {
+        navLinks.forEach(a => {
+          const isActive = a.getAttribute('href') === `#${id}`;
+          a.classList.toggle('active', isActive);
+          if (isActive) a.setAttribute('aria-current', 'page');
+          else a.removeAttribute('aria-current');
+        });
+      };
+
+      // Fallback / initial state
+      const nearestSectionId = () => {
+        const y = window.scrollY + 110; // compensate for fixed header
+        let current = sections[0]?.id;
+        for (const s of sections){
+          if (s.offsetTop <= y) current = s.id;
+        }
+        return current;
+      };
+      setActive(nearestSectionId());
+
+      // Prefer IntersectionObserver when available
+      if ('IntersectionObserver' in window){
+        const obs = new IntersectionObserver((entries) => {
+          // pick the most visible intersecting section
+          const visible = entries
+            .filter(e => e.isIntersecting)
+            .sort((a,b) => (b.intersectionRatio - a.intersectionRatio));
+          if (visible[0]) setActive(visible[0].target.id);
+        }, {
+          root: null,
+          // Pull the "active" zone slightly below the fixed header
+          rootMargin: '-35% 0px -55% 0px',
+          threshold: [0.01, 0.2, 0.4, 0.6]
+        });
+
+        sections.forEach(s => obs.observe(s));
+      } else {
+        // Basic scroll fallback
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(() => {
+            setActive(nearestSectionId());
+            ticking = false;
+          });
+        }, { passive: true });
+      }
+    })();
   </script>
 </body>
 </html>

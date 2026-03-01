@@ -237,6 +237,20 @@
     .mini p{ margin:0; color: var(--muted); font-size: 14px; }
     .mini strong{ color: var(--ink); }
 
+    .tz-note{
+      margin-top: 8px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(239,246,255,.80);
+      border: 1px solid rgba(59,130,246,.18);
+      color: rgba(11,18,32,.80);
+      font-size: 13px;
+      box-shadow: 0 10px 22px rgba(2,6,23,.04);
+    }
+
     .stats{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -449,6 +463,7 @@
             <p><strong>Sunday</strong></p>
             <p>18:00 — A2–B1</p>
             <p>19:30 — B1–B2</p>
+            <div class="tz-note" aria-label="Time zone note">🕒 All times shown are <strong>GMT+3</strong></div>
           </div>
 
           <div class="stats" aria-label="Quick stats">
@@ -526,7 +541,7 @@
       <div class="section-head">
         <div>
           <h2>Schedule</h2>
-          <p>One session per week. All sessions are on Zoom.</p>
+          <p>One session per week. All sessions are on Zoom. <strong>All times shown are GMT+3.</strong></p>
         </div>
       </div>
 
@@ -535,13 +550,13 @@
           <h3>Wednesday</h3>
           <p><strong>18:00 — A2–B1</strong></p>
           <p><strong>19:30 — B1–B2</strong></p>
-          <p>75 minutes • Zoom • small group</p>
+          <p>75 minutes • Zoom • small group • <strong>GMT+3</strong></p>
         </div>
         <div class="tile">
           <h3>Sunday</h3>
           <p><strong>18:00 — A2–B1</strong></p>
           <p><strong>19:30 — B1–B2</strong></p>
-          <p>75 minutes • Zoom • small group</p>
+          <p>75 minutes • Zoom • small group • <strong>GMT+3</strong></p>
         </div>
       </div>
     </section>
@@ -646,7 +661,6 @@
       <div class="section-head">
         <div>
           <h2>What participants say</h2>
-          
         </div>
       </div>
 
@@ -688,7 +702,6 @@
       <div class="section-head">
         <div>
           <h2>Book a spot</h2>
-          
         </div>
       </div>
 
@@ -703,13 +716,13 @@
 
             <!-- EDIT THIS LINK -->
             <p style="margin-top:12px;">
-              <a class="btn primary" href="YOUR_TALLY_FORM_LINK_HERE" target="_blank" rel="noopener noreferrer">
+              <a class="btn primary" href="https://tally.so/r/ZjdRRA" target="_blank" rel="noopener noreferrer">
                 Open booking form
               </a>
             </p>
 
             <p style="margin-top:10px; color: var(--muted); font-size: 13px;">
-              Replace <strong>YOUR_TALLY_FORM_LINK_HERE</strong> with your Tally form URL.
+        
             </p>
           </div>
 

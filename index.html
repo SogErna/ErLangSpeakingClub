@@ -468,27 +468,39 @@
             <li>👥 Up to 6 participants</li>
             <li>🤝 Friendly + networking vibe</li>
           </ul>
+
+          <!-- Teacher photo placed in the area you marked -->
+          <div style="margin-top:22px; max-width:420px;">
+            <img src="Photos/MainTeacher.png" alt="Ms Erna" loading="lazy"
+                 style="width:100%; height:auto; border-radius:18px; box-shadow:0 16px 36px rgba(2,6,23,.15); border:1px solid rgba(15,23,42,.12);">
+          </div>
         </div>
 
         <aside class="hero-right" aria-label="Quick info">
-          <div class="hero-photo" aria-label="Speaking club on Zoom">
-            <img src="Photos/MainTeacher.png" alt="Online speaking club on Zoom" loading="lazy">
-          </div>
 
           <div class="mini">
             <h3>Weekly sessions</h3>
-            <p><strong>Wednesday</strong></p>
-            <p>18:00 — A2–B1</p>
-            <p>19:30 — B1–B2</p>
-            <br>
-            <p><strong>Sunday</strong></p>
-            <p>18:00 — A2–B1</p>
-            <p>19:30 — B1–B2</p>
-            <div class="tz-note" aria-label="Time zone note">
-              <img src="Photos/Calendar.png"
-                   alt="Calendar icon"
-                   style="width:20px; height:20px; border-radius:6px; margin-right:4px;">
-              All times shown are <strong>GMT+3</strong>
+
+            <!-- Schedule card layout: text on the left, calendar image on the right -->
+            <div style="display:flex; gap:14px; align-items:stretch;">
+              <div style="flex: 1 1 auto; min-width: 180px;">
+                <p><strong>Wednesday</strong></p>
+                <p>18:00 — A2–B1</p>
+                <p>19:30 — B1–B2</p>
+                <br>
+                <p><strong>Sunday</strong></p>
+                <p>18:00 — A2–B1</p>
+                <p>19:30 — B1–B2</p>
+
+                <div class="tz-note" aria-label="Time zone note" style="margin-top: 10px;">
+                  🕒 All times shown are <strong>GMT+3</strong>
+                </div>
+              </div>
+
+              <!-- IMAGE GOES HERE (the empty area you marked) -->
+              <div style="flex: 0 0 180px; border-radius: 16px; overflow:hidden; border:1px solid rgba(15,23,42,.12); background: rgba(255,255,255,.55); box-shadow: 0 12px 28px rgba(2,6,23,.06);">
+                <img src="Photos/Calendar.png" alt="Calendar" loading="lazy" style="width:100%; height:100%; display:block; object-fit: cover;">
+              </div>
             </div>
           </div>
 

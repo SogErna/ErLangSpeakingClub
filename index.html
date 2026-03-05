@@ -163,7 +163,14 @@
     }
 
     /* HERO */
-    .hero{ padding-top: 22px; padding-bottom: 10px; }
+    .hero{ padding-top: 22px; padding-bottom: 10px; 
+      /* Soft hero background image */
+      background-image: linear-gradient(rgba(246,249,255,0.85), rgba(246,249,255,0.92)), url("Photos/MainTeacher.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 20px;
+    }
     .hero-grid{
       display:grid;
       grid-template-columns: 1.25fr .75fr;
@@ -225,6 +232,27 @@
       box-shadow: 0 10px 24px rgba(2,6,23,.04);
     }
 
+    /* ✅ IMAGE PLACE #1 (Hero) — the big blank area you marked */
+    .hero-visual{
+      margin-top: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(15,23,42,.12);
+      background: rgba(255,255,255,.70);
+      box-shadow: 0 14px 34px rgba(2,6,23,.06);
+      overflow: hidden;
+    }
+    .hero-visual img{
+      display:block;
+      width:100%;
+      height: 220px;
+      object-fit: cover;
+    }
+    .hero-visual .cap{
+      padding: 10px 12px;
+      color: rgba(11,18,32,.72);
+      font-size: 13px;
+    }
+
     .hero-right{ padding: 18px; display:flex; flex-direction:column; gap: 12px; position: relative; }
 
     .mini{
@@ -249,6 +277,15 @@
       color: rgba(11,18,32,.80);
       font-size: 13px;
       box-shadow: 0 10px 22px rgba(2,6,23,.04);
+    }
+
+    /* ✅ IMAGE PLACE #3 (Schedule) — small icon/image near GMT+3 */
+    .tz-note img{
+      width: 22px;
+      height: 22px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid rgba(59,130,246,.18);
     }
 
     .stats{
@@ -300,6 +337,22 @@
 
     .list{ margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
     .list li{ margin: 6px 0; }
+
+    /* ✅ IMAGE PLACE #2 (About the teacher) */
+    .about-card{
+      display:flex;
+      gap: 14px;
+      align-items:flex-start;
+    }
+    .teacher-photo{
+      width: 96px;
+      height: 96px;
+      border-radius: 20px;
+      object-fit: cover;
+      border: 1px solid rgba(15,23,42,.12);
+      box-shadow: 0 14px 24px rgba(2,6,23,.10);
+      flex: 0 0 auto;
+    }
 
     /* TESTIMONIALS */
     .review{
@@ -386,6 +439,7 @@
     }
     @media (max-width: 520px){
       .stats{ grid-template-columns: 1fr; }
+      .teacher-photo{ width: 78px; height: 78px; border-radius: 18px; }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -451,6 +505,14 @@
             <li>👥 Up to 6 participants</li>
             <li>🤝 Friendly + networking vibe</li>
           </ul>
+
+          <!-- ✅ IMAGE PLACE #1 (Hero) — PUT YOUR ZOOM-MEETING PHOTO HERE -->
+          <!-- Change ONLY the src value below to your GitHub folder path, e.g. images/zoom.jpg -->
+          <div class="hero-visual" aria-label="Speaking club photo">
+            <img src="images/zoom-meeting.jpg" alt="Zoom speaking club meeting" />
+            <div class="cap">Real sessions • friendly groups • Zoom breakout rooms</div>
+          </div>
+          <!-- ✅ END IMAGE PLACE #1 -->
         </div>
 
         <aside class="hero-right" aria-label="Quick info">
@@ -463,7 +525,14 @@
             <p><strong>Sunday</strong></p>
             <p>18:00 — A2–B1</p>
             <p>19:30 — B1–B2</p>
-            <div class="tz-note" aria-label="Time zone note">🕒 All times shown are <strong>GMT+3</strong></div>
+
+            <!-- ✅ IMAGE PLACE #3 (Schedule) — SMALL ICON/PHOTO NEXT TO GMT+3 -->
+            <!-- Change ONLY the src value below, e.g. images/clock.jpg -->
+            <div class="tz-note" aria-label="Time zone note">
+              <img src="images/timezone.jpg" alt="Clock icon" />
+              🕒 All times shown are <strong>GMT+3</strong>
+            </div>
+            <!-- ✅ END IMAGE PLACE #3 -->
           </div>
 
           <div class="stats" aria-label="Quick stats">
@@ -603,15 +672,23 @@
 
       <div class="two">
         <div class="tile">
-          <h3>Ms Erna</h3>
-          <p>
-            I have <strong>20+ years</strong> of teaching experience and a <strong>pedagogical university degree</strong>.
-            I’ve been teaching English since <strong>2002</strong>.
-          </p>
-          <p style="margin-top:10px; color: var(--muted); font-size:14px;">
-            In ErLang Speaking Club, we focus on <strong>real-life speaking</strong>: comfortable pace, clear structure,
-            and small groups so everyone gets time to talk.
-          </p>
+          <!-- ✅ IMAGE PLACE #2 (About) — PUT YOUR PHOTO HERE -->
+          <!-- Change ONLY the src value below to your GitHub folder path, e.g. images/erna.jpg -->
+          <div class="about-card">
+            <img class="teacher-photo" src="images/ms-erna.jpg" alt="Ms Erna" />
+            <div>
+              <h3 style="margin:0 0 8px;">Ms Erna</h3>
+              <p>
+                I have <strong>20+ years</strong> of teaching experience and a <strong>pedagogical university degree</strong>.
+                I’ve been teaching English since <strong>2002</strong>.
+              </p>
+              <p style="margin-top:10px; color: var(--muted); font-size:14px;">
+                In ErLang Speaking Club, we focus on <strong>real-life speaking</strong>: comfortable pace, clear structure,
+                and small groups so everyone gets time to talk.
+              </p>
+            </div>
+          </div>
+          <!-- ✅ END IMAGE PLACE #2 -->
         </div>
 
         <div class="tile" style="background: linear-gradient(180deg, rgba(239,246,255,.85), rgba(255,255,255,.78)); border-color: rgba(59,130,246,.18);">
@@ -722,7 +799,7 @@
             </p>
 
             <p style="margin-top:10px; color: var(--muted); font-size: 13px;">
-        
+
             </p>
           </div>
 

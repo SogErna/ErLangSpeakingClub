@@ -182,11 +182,25 @@
       transform: rotate(15deg);
       pointer-events:none;
     }
-    .hero-left{<div style="margin-top:20px;">
-  <img src="Photos/MainTeacher.png" 
-       alt="ErLang Speaking Club session"
-       style="width:100%; border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,0.12);"> 
-               </div }
+    .hero-left{ padding: 28px; position: relative; }
+
+    .hero-photo{
+      border-radius: 18px;
+      overflow:hidden;
+      border: 1px solid rgba(15,23,42,.12);
+      background: rgba(255,255,255,.65);
+      box-shadow: 0 16px 36px rgba(2,6,23,.08);
+    }
+    .hero-photo img{
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display:block;
+    }
+    @media (max-width: 900px){
+      .hero-photo img{ height: 200px; }
+    }
+
     .kicker{
       display:inline-flex; align-items:center; gap:8px;
       font-size: 13px;
@@ -457,6 +471,10 @@
         </div>
 
         <aside class="hero-right" aria-label="Quick info">
+          <div class="hero-photo" aria-label="Speaking club on Zoom">
+            <img src="Photos/MainTeacher.png" alt="Online speaking club on Zoom" loading="lazy">
+          </div>
+
           <div class="mini">
             <h3>Weekly sessions</h3>
             <p><strong>Wednesday</strong></p>
@@ -467,11 +485,12 @@
             <p>18:00 — A2–B1</p>
             <p>19:30 — B1–B2</p>
             <div class="tz-note" aria-label="Time zone note">
-  <img src="Photos/Calendar.png"
-       alt="Calendar icon"
-       style="width:20px; height:20px; border-radius:6px; margin-right:4px;">
-  All times shown are <strong>GMT+3</strong>
-</div>
+              <img src="Photos/Calendar.png"
+                   alt="Calendar icon"
+                   style="width:20px; height:20px; border-radius:6px; margin-right:4px;">
+              All times shown are <strong>GMT+3</strong>
+            </div>
+          </div>
 
           <div class="stats" aria-label="Quick stats">
             <div class="stat"><strong>6 max</strong><span>participants</span></div>
@@ -601,27 +620,28 @@
 
     <!-- ABOUT -->
     <section id="about">
-      <div class="tile">
-  <div style="display:flex; gap:16px; align-items:flex-start;">
-    
-    <img src="Photos/Meet the teacher.png"
-         alt="Ms Erna"
-         style="width:110px; height:110px; object-fit:cover; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+      <div class="two">
+        <div class="tile">
+          <div style="display:flex; gap:16px; align-items:flex-start;">
 
-    <div>
-      <h3>Ms Erna</h3>
-      <p>
-        I have <strong>20+ years</strong> of teaching experience and a <strong>pedagogical university degree</strong>.
-        I’ve been teaching English since <strong>2002</strong>.
-      </p>
-      <p style="margin-top:10px; color: var(--muted); font-size:14px;">
-        In ErLang Speaking Club, we focus on <strong>real-life speaking</strong>: comfortable pace, clear structure,
-        and small groups so everyone gets time to talk.
-      </p>
-    </div>
+            <img src="Photos/Meet%20the%20teacher.png"
+                 alt="Ms Erna"
+                 style="width:110px; height:110px; object-fit:cover; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
 
-  </div>
-</div>
+            <div>
+              <h3>Ms Erna</h3>
+              <p>
+                I have <strong>20+ years</strong> of teaching experience and a <strong>pedagogical university degree</strong>.
+                I’ve been teaching English since <strong>2002</strong>.
+              </p>
+              <p style="margin-top:10px; color: var(--muted); font-size:14px;">
+                In ErLang Speaking Club, we focus on <strong>real-life speaking</strong>: comfortable pace, clear structure,
+                and small groups so everyone gets time to talk.
+              </p>
+            </div>
+
+          </div>
+        </div>
 
         <div class="tile" style="background: linear-gradient(180deg, rgba(239,246,255,.85), rgba(255,255,255,.78)); border-color: rgba(59,130,246,.18);">
           <h3>Why participants stay</h3>
@@ -731,7 +751,7 @@
             </p>
 
             <p style="margin-top:10px; color: var(--muted); font-size: 13px;">
-        
+
             </p>
           </div>
 

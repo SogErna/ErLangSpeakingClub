@@ -248,6 +248,8 @@
     .hero-right{ padding: 18px; display:flex; flex-direction:column; gap: 12px; position: relative; }
 
     .mini{
+      overflow: visible;
+
       padding: 16px;
       border-radius: 16px;
       border: 1px solid rgba(15,23,42,.12);
@@ -256,6 +258,18 @@
     .mini h3{ margin:0 0 6px; font-size: 14px; }
     .mini p{ margin:0; color: var(--muted); font-size: 14px; }
     .mini strong{ color: var(--ink); }
+
+    .schedule-flex{ display:flex; gap:14px; align-items:stretch; }
+    .schedule-text{ flex: 1 1 auto; min-width: 180px; }
+    .schedule-media{
+      flex: 0 0 180px;
+      border-radius: 16px;
+      overflow:hidden;
+      border:1px solid rgba(15,23,42,.12);
+      background: rgba(255,255,255,.55);
+      box-shadow: 0 12px 28px rgba(2,6,23,.06);
+    }
+    .schedule-media img{ width:100%; height:100%; display:block; object-fit: cover; }
 
     .tz-note{
       margin-top: 8px;
@@ -406,6 +420,12 @@
     }
     @media (max-width: 520px){
       .stats{ grid-template-columns: 1fr; }
+
+      /* Prevent the Weekly sessions card from overflowing on small screens */
+      .schedule-flex{ flex-direction: column; }
+      .schedule-text{ min-width: 0; }
+      .schedule-media{ width: 100%; height: 140px; }
+    }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -485,8 +505,8 @@
             <h3>Weekly sessions</h3>
 
             <!-- Schedule card layout: text on the left, calendar image on the right -->
-            <div style="display:flex; gap:14px; align-items:stretch;">
-              <div style="flex: 1 1 auto; min-width: 180px;">
+            <div class="schedule-flex">
+              <div class="schedule-text">
                 <p><strong>Wednesday</strong></p>
                 <p>18:00 — A2–B1</p>
                 <p>19:30 — B1–B2</p>
@@ -501,7 +521,7 @@
               </div>
 
               <!-- IMAGE GOES HERE (the empty area you marked) -->
-              <div style="flex: 0 0 180px; border-radius: 16px; overflow:hidden; border:1px solid rgba(15,23,42,.12); background: rgba(255,255,255,.55); box-shadow: 0 12px 28px rgba(2,6,23,.06);">
+              <div class="schedule-media">
                 <img src="Photos/Calendar.png" alt="Calendar" loading="lazy" style="width:100%; height:100%; display:block; object-fit: cover;">
               </div>
             </div>
